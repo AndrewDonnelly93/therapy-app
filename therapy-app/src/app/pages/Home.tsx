@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 // Components
 import Box from "@mui/material/Box";
@@ -8,8 +8,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import type { Navigation, Router } from "@toolpad/core";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { createTheme } from "@mui/material/styles";
+import psychologyIcon from "../assets/psychology.svg";
+import { Typography } from "@mui/material";
 
-const NavigationMenu: Navigation = [
+const navigationMenu: Navigation = [
   {
     segment: "dashboard",
     title: "Home",
@@ -38,12 +40,52 @@ const appTheme = createTheme({
   },
 });
 
-const Home: React.FC = () => {
+interface IDashboardContent {
+  pathname: string;
+}
+
+const DashboardContent: React.FC<IDashboardContent> = ({ pathname }) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        py: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Typography>Dashboard content for {pathname}</Typography>
+    </Box>
+  );
+};
+
+const Home: React.FC = () => {
+  const [pathname, setPathname] = useState("/dashboard");
+
+  const router = React.useMemo<Router>(() => {
+    return {
+      pathname,
+      searchParams: new URLSearchParams(),
+      navigate: (path) => setPathname(String(path)),
+    };
+  }, [pathname]);
+
+  return (
+    <Box>
       <Grid2 container>
-        <AppProvider navigation={NavigationMenu} theme={appTheme}>
-          <DashboardLayout>Dashboard</DashboardLayout>
+        <AppProvider
+          navigation={navigationMenu}
+          theme={appTheme}
+          router={router}
+          branding={{
+            logo: <img src={psychologyIcon} alt="Trish Bourke's app" />,
+            title: "Trish Bourke's app",
+          }}
+        >
+          <DashboardLayout>
+            <DashboardContent pathname={pathname} />
+          </DashboardLayout>
         </AppProvider>
       </Grid2>
     </Box>
