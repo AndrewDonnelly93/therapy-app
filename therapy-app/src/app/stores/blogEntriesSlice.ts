@@ -14,15 +14,22 @@ export enum BlogEntriesStatus {
 
 export interface BlogEntriesState {
   blogEntriesList: IBlogEntry[] | [];
+  aboutMe: IBlogEntry[];
   status: BlogEntriesStatus;
   error: string;
 }
 
 const initialState: BlogEntriesState = {
   blogEntriesList: [],
+  aboutMe: [],
   status: BlogEntriesStatus.IDLE,
   error: "",
 };
+
+export enum BlogEntriesType {
+  "MAIN" = "main",
+  "BLOG" = "blog",
+}
 
 // Fetching a list of blog entries
 export const fetchBlogEntries = createAsyncThunk(
@@ -52,7 +59,12 @@ export const blogEntriesSlice = createSlice({
             action.payload.data?.blogPostCollection?.items
           );
           const updatedState = new Map();
-          mergedPayload.forEach((item) => updatedState.set(item._id, item));
+          mergedPayload.forEach((item) =>
+            item.blogEntryTitle === "About me"
+              ? // @ts-ignore
+                (state.aboutMe = [item])
+              : updatedState.set(item._id, item)
+          );
 
           // @ts-ignore
           state.blogEntriesList = Array.from(updatedState.values());
@@ -68,5 +80,9 @@ export const blogEntriesSlice = createSlice({
 export const selectBlogEntries = (state: RootState) =>
   // @ts-ignore
   state.blogEntries.blogEntriesList;
+
+export const selectAboutMeBlogEntry = (state: RootState) =>
+  // @ts-ignore
+  state.blogEntries.aboutMe;
 
 export default blogEntriesSlice.reducer;

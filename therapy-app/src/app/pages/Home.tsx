@@ -4,24 +4,23 @@ import { AppProvider } from "@toolpad/core/AppProvider";
 import Box from "@mui/material/Box";
 import Grid2 from "@mui/material/Grid2";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import RssFeedIcon from "@mui/icons-material/RssFeed";
 import type { Navigation, Router } from "@toolpad/core";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { createTheme } from "@mui/material/styles";
 import psychologyIcon from "../assets/psychology.svg";
-import { Typography } from "@mui/material";
 import BlogEntriesList from "app/components/ui/blog-entry/BlogEntriesList";
 
 const navigationMenu: Navigation = [
   {
-    segment: "dashboard",
+    segment: "main",
     title: "About me",
     icon: <DashboardIcon />,
   },
   {
     segment: "blog",
     title: "My blog",
-    icon: <ShoppingCartIcon />,
+    icon: <RssFeedIcon />,
   },
 ];
 
@@ -55,14 +54,13 @@ const DashboardContent: React.FC<IDashboardContent> = ({ pathname }) => {
         textAlign: "center",
       }}
     >
-      <Typography>Dashboard content for {pathname}</Typography>
-      <BlogEntriesList />
+      <BlogEntriesList pathname={pathname} />
     </Box>
   );
 };
 
 const Home: React.FC = () => {
-  const [pathname, setPathname] = useState("/dashboard");
+  const [pathname, setPathname] = useState("/main");
 
   const router = React.useMemo<Router>(() => {
     return {
@@ -80,8 +78,8 @@ const Home: React.FC = () => {
           theme={appTheme}
           router={router}
           branding={{
-            logo: <img src={psychologyIcon} alt="Trish Bourke's app" />,
-            title: "Trish Bourke's app",
+            logo: <img src={psychologyIcon} alt="Trish Bourke therapy" />,
+            title: "Trish Bourke therapy",
           }}
         >
           <DashboardLayout>

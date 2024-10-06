@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // Components
 import Home from "./app/pages/Home";
 import Container from "@mui/material/Container";
+// Styles
 import { styled } from "@mui/material/styles";
 
 const StyledContainer = styled(Container)({

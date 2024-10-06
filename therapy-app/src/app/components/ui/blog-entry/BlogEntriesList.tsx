@@ -9,6 +9,8 @@ import {
   fetchBlogEntries,
   selectBlogEntries,
   BlogEntriesStatus,
+  BlogEntriesType,
+  selectAboutMeBlogEntry,
 } from "app/stores/blogEntriesSlice";
 // Hooks
 import { useAppDispatch, useAppSelector } from "../../../hooks";
@@ -28,11 +30,17 @@ const renderBlogEntries = (blogEntries: IBlogEntry[]) => {
   });
 };
 
+interface IBlogEntriesList {
+  pathname: string;
+}
+
 // @ts-ignore
-const BlogEntriesList: React.FC = () => {
+const BlogEntriesList: React.FC<IBlogEntriesList> = ({ pathname }) => {
   // Hooks
   const dispatch = useAppDispatch();
   const blogEntries = useAppSelector(selectBlogEntries);
+  const aboutMeBlogEntry = useAppSelector(selectAboutMeBlogEntry);
+
   // @ts-ignore
   const blogEntriesStatus = useAppSelector((state) => state.blogEntries.status);
   // @ts-ignore
@@ -52,7 +60,13 @@ const BlogEntriesList: React.FC = () => {
 
     // Successful fetching
   } else if (blogEntriesStatus === BlogEntriesStatus.SUCCEDEED) {
-    return <Box>{renderBlogEntries(blogEntries)}</Box>;
+    return (
+      <Box>
+        {renderBlogEntries(
+          pathname === "/main" ? aboutMeBlogEntry : blogEntries
+        )}
+      </Box>
+    );
 
     // Error while fetching
   } else {

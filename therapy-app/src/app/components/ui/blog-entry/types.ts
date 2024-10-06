@@ -1,6 +1,6 @@
 export interface IBlogEntry {
   blogEntryTitle: string;
-  blogEntry: JSON;
+  blogEntry: JSON | undefined;
   _id: string;
   photo: IPhoto;
 }

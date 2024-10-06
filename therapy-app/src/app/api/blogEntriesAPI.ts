@@ -15,6 +15,9 @@ const query = `
         blogEntryTitle
         photo {
           url
+          height
+          width
+          fileName
         }
         blogEntry {
           json 
