@@ -47,14 +47,15 @@ export const blogEntriesSlice = createSlice({
         state.status = BlogEntriesStatus.SUCCEDEED;
         // @ts-ignore
         if (action.payload.data?.blogPostCollection?.items) {
-          // @ts-ignore
-          state.blogEntriesList = Array.from(
-            new Set([
-              ...state.blogEntriesList,
-              // @ts-ignore
-              ...action.payload.data?.blogPostCollection?.items,
-            ])
+          const mergedPayload = state.blogEntriesList.concat(
+            // @ts-ignore
+            action.payload.data?.blogPostCollection?.items
           );
+          const updatedState = new Map();
+          mergedPayload.forEach((item) => updatedState.set(item._id, item));
+
+          // @ts-ignore
+          state.blogEntriesList = Array.from(updatedState.values());
         }
       })
       .addCase(fetchBlogEntries.rejected, (state, action) => {
