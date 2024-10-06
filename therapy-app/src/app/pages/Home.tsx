@@ -10,16 +10,17 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { createTheme } from "@mui/material/styles";
 import psychologyIcon from "../assets/psychology.svg";
 import { Typography } from "@mui/material";
+import BlogEntriesList from "app/components/ui/blog-entry/BlogEntriesList";
 
 const navigationMenu: Navigation = [
   {
     segment: "dashboard",
-    title: "Home",
+    title: "About me",
     icon: <DashboardIcon />,
   },
   {
-    segment: "appointments",
-    title: "Book an appointment",
+    segment: "blog",
+    title: "My blog",
     icon: <ShoppingCartIcon />,
   },
 ];
@@ -39,7 +40,6 @@ const appTheme = createTheme({
     },
   },
 });
-
 interface IDashboardContent {
   pathname: string;
 }
@@ -56,6 +56,7 @@ const DashboardContent: React.FC<IDashboardContent> = ({ pathname }) => {
       }}
     >
       <Typography>Dashboard content for {pathname}</Typography>
+      <BlogEntriesList />
     </Box>
   );
 };
