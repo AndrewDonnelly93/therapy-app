@@ -52,6 +52,7 @@ const DashboardContent: React.FC<IDashboardContent> = ({ pathname }) => {
         flexDirection: "column",
         alignItems: "center",
         textAlign: "center",
+        overflowX: "hidden",
       }}
     >
       <BlogEntriesList pathname={pathname} />
