@@ -11,7 +11,7 @@ const StyledContainer = styled(Container)({
 
 const App = () => {
   return (
-    <StyledContainer fixed>
+    <StyledContainer fixed sx={{ overflowX: "hidden" }}>
       <Home />
     </StyledContainer>
   );
